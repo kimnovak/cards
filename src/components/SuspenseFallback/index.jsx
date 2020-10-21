@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Layout({ children }) {
+function SuspenseFallback() {
     return (
         <React.Fragment>
-            {children}
+            Loading...
         </React.Fragment>
     )
 }
 
-export default React.memo(Layout);
+export default React.memo(SuspenseFallback);

@@ -1,24 +1,35 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider, Button } from '@material-ui/core';
+import Layout from '@components/Layout';
+import SuspenseFallback from '@components/SuspenseFallback';
+import theme from '@styles/theme'
 
 import './App.css';
 
 const Cards = React.lazy(() => import('@pages/Cards'));
-const NotFound = React.lazy(() => import("@pages/NotFound"))
+const NotFound = React.lazy(() => import("@pages/NotFound"));
 
 
 function App() {
   return (
-    <div className="App">
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <BrowserRouter>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<SuspenseFallback />}>
           <Switch>
-            <Route exact path="/cards" component={Cards} />
-            <Route path="*" component={NotFound} />
+            <Layout>
+              <Button variant="contained" color="primary">
+                Test
+              </Button>
+              <Route exact path="/cards" component={Cards} />
+              <Route path="*" component={NotFound} />
+            </Layout>
           </Switch>
         </Suspense>
       </BrowserRouter>
-    </div>
+    </ThemeProvider >
   );
 }
 
