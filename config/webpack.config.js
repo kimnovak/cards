@@ -306,6 +306,7 @@ module.exports = function (webpackEnv) {
         '@actionTypes': path.resolve(__dirname, '../src/store/actionTypes'),
         '@hooks': path.resolve(__dirname, '../src/hooks'),
         '@styles': path.resolve(__dirname, '../src/styles'),
+        '@assets': path.resolve(__dirname, '../src/assets'),
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
@@ -504,6 +505,17 @@ module.exports = function (webpackEnv) {
                   }
                 }
               ]
+            },
+            {
+              test: /\.(png|jp(e*)g|svg|gif)$/,
+              use: [
+                {
+                  loader: 'file-loader',
+                  options: {
+                    name: 'images/[hash]-[name].[ext]',
+                  },
+                },
+              ],
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.

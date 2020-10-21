@@ -17,6 +17,7 @@ let theme = createMuiTheme({
             'sans-serif',
         ].join(','),
     },
+    spacing: 8
 })
 
 export default responsiveFontSizes(theme);

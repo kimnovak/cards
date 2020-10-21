@@ -1,10 +1,15 @@
 import React from 'react';
+import { Container, Typography } from '@material-ui/core';
 
 function Cards() {
+  
     return (
-        <React.Fragment>
-            Cards
-        </React.Fragment>
+        <Container>
+            <Typography variant="h1" component="h2">
+                My cards
+            </Typography>
+            
+        </Container>
     )
 }
 
