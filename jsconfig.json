@@ -1,1 +1,17 @@
+// {
+//     "compilerOptions": {
+//         "jsx": "react",
+//         "baseUrl": "./",
+//         "paths": {
+//             "@components/*": ["src/components/*"],
+//             "@containers/*": ["src/containers/*"],
+//             "@pages/*": ["src/pages/*"],
+//             "@store/*": ["src/store/*"],
+//             "@reducers/*": ["src/store/reducers/*"],
+//             "@actionTypes/*": ["src/store/actionTypes/*"],
+//             "@hooks/*": ["src/hooks/*"],
+//         },
+//     },
+//     "exclude": ["node_modules"]
+// }
 {}
