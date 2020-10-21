@@ -1,8 +1,7 @@
 import React, { Suspense } from 'react';
-import { useSelector } from 'react-redux'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider, Button } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core';
 import Layout from '@components/Layout';
 import SuspenseFallback from '@components/SuspenseFallback';
 import theme from '@styles/theme'
@@ -16,9 +15,6 @@ const NotFound = React.lazy(() => import("@pages/NotFound"));
 
 
 function App() {
-
-  const cards = useSelector(state => state.cards.cards);
-  console.log({cards})
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

@@ -25,7 +25,6 @@ function StripeInput({cardNumber, handleCardNumberChange}) {
                 required
                 id="standard-error-helper-text"
                 variant="outlined"
-                defaultValue=""
                 helperText={`${!isValid ? 'Enter 16 digits' : ''}`}
                 value={cardNumber['first']}
                 onChange={handleCardNumberChange('first')}
