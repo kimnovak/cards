@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory, useParams, withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Container, makeStyles } from '@material-ui/core';
 import Card from '@components/Card';
 import CardFormContainer from '@containers/CardForm';
 import CardForm from '@components/CardForm';
 import { EDIT_CARD } from '@actionTypes/cards';
+import { cardSelector } from '@selectors/cards';
 
 const useStyles = makeStyles({
     container: {
@@ -29,6 +31,15 @@ function EditCard() {
 
     const dispatch = useDispatch();
     const history = useHistory();
+    const { id } = useParams();
+    const card = useSelector(cardSelector(id));
+
+    useEffect(() => {
+        if(!card) return;
+        setName(card.name);
+        setCardNumber(card.cardNumber)
+        setExpiresOn(card.expiresOn)
+    }, [card])
 
     const saveCard = () => {
         if (!validExpDate || !name || Object.values(cardNumber).join().length < 16) return;
@@ -74,4 +85,4 @@ function EditCard() {
     )
 }
 
-export default React.memo(EditCard);
+export default React.memo(withRouter(EditCard));
