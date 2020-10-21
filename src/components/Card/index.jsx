@@ -63,17 +63,17 @@ const cardTypes = {
 
 const cardTypesWithIcons = [VISA, MASTER_CARD, DISCOVER_CARD]
 
-function Card({name, cardNumber, expiresOn}) {
+function Card({name, cardNumber, expiresOn, onClick}) {
     const { container, nameContainer, cardNumberContainer, expiresOnContainer, chipStyle, brand } = useStyles();
     const cardNumberFirstDigit = cardNumber?.first?.[0]
     return (
-        <Container className={container}>
+        <Container className={container} onClick={onClick}>
             <img src={cardBase} alt="card" />
             {cardTypesWithIcons.includes(cardNumberFirstDigit) && <Box className={brand}><img style={{ maxWidth: '120px', maxHeight: '100px' }} src={cardTypes[cardNumberFirstDigit]} alt="chip" /></Box>}
             <Box className={chipStyle}><img style={{ maxWidth: '70px', maxHeight: '60px' }} src={chip} alt="chip" /></Box>
             <Box className={cardNumberContainer}>{Object.values(cardNumber)?.join?.(' ')}</Box>
             <Box className={nameContainer}>{name}</Box>
-            <Box className={expiresOnContainer}>{expiresOn}</Box>
+            <Box className={expiresOnContainer}>{expiresOn && `${expiresOn.substring(0,2)} / ${expiresOn.substring(2,4)}`}</Box>
         </Container>
     );
 }

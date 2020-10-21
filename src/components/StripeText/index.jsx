@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TextField, makeStyles, Container } from '@material-ui/core';
-import theme from '@styles/theme';
 
-const isnum = /^\d*$/
+const REQUIRED_CARD_NUMBER_LENGTH = 16;
 
 
 const useStyles = makeStyles({
@@ -18,19 +17,21 @@ const useStyles = makeStyles({
 
 function StripeInput({cardNumber, handleCardNumberChange}) {
     const { input, container } = useStyles();
-
+    const isValid = Object.values(cardNumber).join().length >= REQUIRED_CARD_NUMBER_LENGTH;
     return (
         <Container className={container}>
             <TextField
+                error={cardNumber['first'].length < 4}
                 required
                 id="standard-error-helper-text"
                 variant="outlined"
                 defaultValue=""
-                helperText=""
+                helperText={`${!isValid ? 'Enter 16 digits' : ''}`}
                 value={cardNumber['first']}
                 onChange={handleCardNumberChange('first')}
             />
             <TextField
+                error={cardNumber['second'].length < 4}
                 className={input}
                 required
                 id="standard-error-helper-text"
@@ -40,6 +41,7 @@ function StripeInput({cardNumber, handleCardNumberChange}) {
                 onChange={handleCardNumberChange('second')}
             />
             <TextField
+                error={cardNumber['third'].length < 4}
                 className={input}
                 required
                 id="standard-error-helper-text"
@@ -49,6 +51,7 @@ function StripeInput({cardNumber, handleCardNumberChange}) {
                 onChange={handleCardNumberChange('third')}
             />
             <TextField
+                error={cardNumber['fourth'].length < 4}
                 className={input}
                 required
                 id="standard-error-helper-text"

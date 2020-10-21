@@ -307,6 +307,7 @@ module.exports = function (webpackEnv) {
         '@hooks': path.resolve(__dirname, '../src/hooks'),
         '@styles': path.resolve(__dirname, '../src/styles'),
         '@assets': path.resolve(__dirname, '../src/assets'),
+        '@selectors': path.resolve(__dirname, '../src/store/selectors'),
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding

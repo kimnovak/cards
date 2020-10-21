@@ -1,7 +1,7 @@
 import { ADD_CARD } from "../../actionTypes/cards";
 
 const initialState = {
-    cards: ['test']
+    cards: []
 }
 
 function cardsReducer(state = initialState, action) {
@@ -10,7 +10,10 @@ function cardsReducer(state = initialState, action) {
             {
                 cards: [
                     ...state.cards,
-                    action.payload
+                    {
+                        ...action.payload,
+                        id: state.cards.length
+                    }
                 ]
             }
         )

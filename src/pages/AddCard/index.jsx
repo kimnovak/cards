@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import {useHistory} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Container, makeStyles } from '@material-ui/core';
 import Card from '@components/Card';
 import CardFormContainer from '@containers/CardForm';
 import CardForm from '@components/CardForm';
-import {ADD_CARD} from '@actionTypes/cards';
+import { ADD_CARD } from '@actionTypes/cards';
 
 const useStyles = makeStyles({
     container: {
@@ -25,11 +25,13 @@ function AddCard() {
         fourth: ''
     });
     const [expiresOn, setExpiresOn] = useState('');
+    const [validExpDate, setValidExpDate] = useState(true);
 
     const dispatch = useDispatch();
     const history = useHistory();
 
     const saveCard = () => {
+        if (!validExpDate || !name || Object.values(cardNumber).join().length < 16) return;
         const card = {
             name,
             cardNumber,
@@ -39,12 +41,12 @@ function AddCard() {
             type: ADD_CARD,
             payload: card
         })
-        history.push('/cards')
+        history.push('/cards');
     }
 
     return (
         <>
-            <Card 
+            <Card
                 name={name}
                 cardNumber={cardNumber}
                 expiresOn={expiresOn}
@@ -57,13 +59,15 @@ function AddCard() {
                     setCardNumber={setCardNumber}
                     expiresOn={expiresOn}
                     setExpiresOn={setExpiresOn}
-                    >
-                        {(props) => (
-                            <CardForm 
-                                {...props}
-                                saveCard={saveCard}
-                            />
-                        )}
+                    validExpDate={validExpDate}
+                    setValidExpDate={setValidExpDate}
+                >
+                    {(props) => (
+                        <CardForm
+                            {...props}
+                            saveCard={saveCard}
+                        />
+                    )}
                 </CardFormContainer>
             </Container>
         </>

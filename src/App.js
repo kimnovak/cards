@@ -11,6 +11,7 @@ import './App.css';
 
 const Cards = React.lazy(() => import('@pages/Cards'));
 const AddCard = React.lazy(() => import('@pages/AddCard'));
+const EditCard = React.lazy(() => import('@pages/EditCard'));
 const NotFound = React.lazy(() => import("@pages/NotFound"));
 
 
@@ -27,6 +28,7 @@ function App() {
             <Switch>
               <Route exact path="/cards" component={Cards} />
               <Route exact path="/cards/add" component={AddCard} />
+              <Route exact path="/cards/:id/edit" component={EditCard} />
               <Route component={NotFound} />
             </Switch>
           </Layout>
