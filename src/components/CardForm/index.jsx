@@ -3,7 +3,9 @@ import { TextField, InputLabel, Button } from '@material-ui/core';
 import StripeText from '@components/StripeText'
 
 function CardForm({ 
-    card: {name, cardNumber, expiresOn}, 
+    name, 
+    cardNumber, 
+    expiresOn, 
     handleCardNumberChange, 
     handleNameChange, 
     handleExpiresOnChange, 

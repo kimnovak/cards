@@ -1,18 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
+import CardFormUI from '@components/CardForm';
+import Card from '@components/Card';
+import { Container, makeStyles } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+
+const CARD_NUMBER_LENGTH = 16;
 
 let isnum = /^\d*$/
 const possibleStartingDigits = ['4', '5', '6'];
 
-function CardForm({ children, validExpDate, setValidExpDate, ...card }) {
-    const {
-        cardNumber,
-        setName,
-        setCardNumber,
-        setExpiresOn
-    } = card;
+const useStyles = makeStyles({
+    container: {
+        maxWidth: '440px',
+        padding: 0
+    }
+})
+
+function CardForm({ actionType, initialCardState }) {
+    const { container } = useStyles();
+    const [name, setName] = useState(initialCardState?.name);
+    const [cardNumber, setCardNumber] = useState(initialCardState?.cardNumber);
+    const [expiresOn, setExpiresOn] = useState(initialCardState?.expiresOn);
+    const [validExpDate, setValidExpDate] = useState(true);
+
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleNameChange = (event) => {
         setName(event.target.value);
+    }
+
+    const saveCard = () => {
+        if (!validExpDate || !name || Object.values(cardNumber).join().length < CARD_NUMBER_LENGTH) return;
+        const newCard = {
+            name,
+            cardNumber,
+            expiresOn
+        }
+        dispatch({
+            type: actionType,
+            payload: newCard
+        })
+        history.push('/cards');
     }
 
     const handleExpiresOnChange = (event) => {
@@ -29,7 +60,7 @@ function CardForm({ children, validExpDate, setValidExpDate, ...card }) {
         } else {
             setValidExpDate(true)
         }
-        
+
         setExpiresOn(event.target.value);
     }
 
@@ -43,10 +74,27 @@ function CardForm({ children, validExpDate, setValidExpDate, ...card }) {
     }
 
 
-    return typeof children === 'function' ?
-        children({ card, handleCardNumberChange, handleNameChange, handleExpiresOnChange, validExpDate })
-        :
-        children
+    return (
+        <>
+            <Card
+                name={name}
+                cardNumber={cardNumber}
+                expiresOn={expiresOn}
+            />
+            <Container className={container}>
+                <CardFormUI
+                    saveCard={saveCard}
+                    name={name}
+                    cardNumber={cardNumber}
+                    expiresOn={expiresOn}
+                    handleNameChange={handleNameChange}
+                    handleCardNumberChange={handleCardNumberChange}
+                    handleExpiresOnChange={handleExpiresOnChange}
+                    validExpDate={validExpDate}
+                />
+            </Container>
+        </>
+    )
 }
 
 export default React.memo(CardForm);
