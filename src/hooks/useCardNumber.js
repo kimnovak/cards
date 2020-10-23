@@ -11,11 +11,12 @@ function useCardNumber(initialState) {
     const [valid, setValid] = useState(true);
     
     const handleCardNumberChange = (key) => (event) => {
-        if (!event.target.value.match(onlyDigitsRegex) || event.target.value.length > CARD_NUMBER_PARTIAL_LENGTH) return
-        if (key === 'first' && !possibleCardNumberFirstDigits.includes(event.target.value[0])) return
+        const cardNumberPartial = event.target.value;
+        if (!cardNumberPartial?.match?.(onlyDigitsRegex) || cardNumberPartial?.length > CARD_NUMBER_PARTIAL_LENGTH) return
+        if (key === 'first' && !possibleCardNumberFirstDigits.includes(cardNumberPartial?.[0])) return
         setCardNumber({
             ...cardNumber,
-            [key]: event.target.value
+            [key]: cardNumberPartial
         })
     }
 

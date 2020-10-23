@@ -4,11 +4,6 @@ import Card from '@components/Card';
 import { Container, makeStyles } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import {
-    CARD_NUMBER_LENGTH,
-    onlyDigitsRegex,
-    possibleCardNumberFirstDigits
-} from '@constants/cards';
 import useCardNumber from '@hooks/useCardNumber';
 
 

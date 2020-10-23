@@ -6,6 +6,9 @@ import visa from '@assets/images/visa.png';
 import masterCard from '@assets/images/master.png';
 import discoverCard from '@assets/images/discover.png'
 import { isValid } from 'date-fns';
+import {
+    possibleCardNumberFirstDigits
+} from '@constants/cards';
 
 const useStyles = makeStyles({
     container: {
@@ -52,17 +55,11 @@ const useStyles = makeStyles({
     }
 })
 
-const VISA = '4';
-const MASTER_CARD = '5';
-const DISCOVER_CARD = '6';
-
 const cardTypes = {
     '4': visa,
     '5': masterCard,
     '6': discoverCard
 } 
-
-const cardTypesWithIcons = [VISA, MASTER_CARD, DISCOVER_CARD]
 
 function Card({name, cardNumber, expiresOn, onClick}) {
     const { container, nameContainer, cardNumberContainer, expiresOnContainer, chipStyle, brand } = useStyles();
@@ -74,7 +71,7 @@ function Card({name, cardNumber, expiresOn, onClick}) {
     return (
         <Container className={container} onClick={onClick}>
             <img src={cardBase} alt="card" />
-            {cardTypesWithIcons.includes(cardNumberFirstDigit) && <Box className={brand}><img style={{ maxWidth: '120px', maxHeight: '100px' }} src={cardTypes[cardNumberFirstDigit]} alt="chip" /></Box>}
+            {possibleCardNumberFirstDigits.includes(cardNumberFirstDigit) && <Box className={brand}><img style={{ maxWidth: '120px', maxHeight: '100px' }} src={cardTypes[cardNumberFirstDigit]} alt="chip" /></Box>}
             <Box className={chipStyle}><img style={{ maxWidth: '70px', maxHeight: '60px' }} src={chip} alt="chip" /></Box>
             <Box className={cardNumberContainer}>{Object.values(cardNumber)?.join?.(' ')}</Box>
             <Box className={nameContainer}>{name}</Box>
