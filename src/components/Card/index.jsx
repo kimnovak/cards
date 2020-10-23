@@ -5,6 +5,7 @@ import chip from '@assets/images/chip.png';
 import visa from '@assets/images/visa.png';
 import masterCard from '@assets/images/master.png';
 import discoverCard from '@assets/images/discover.png'
+import { isValid } from 'date-fns';
 
 const useStyles = makeStyles({
     container: {
@@ -66,6 +67,10 @@ const cardTypesWithIcons = [VISA, MASTER_CARD, DISCOVER_CARD]
 function Card({name, cardNumber, expiresOn, onClick}) {
     const { container, nameContainer, cardNumberContainer, expiresOnContainer, chipStyle, brand } = useStyles();
     const cardNumberFirstDigit = cardNumber?.first?.[0]
+    let expiresOnFormatted;
+    if(isValid(expiresOn)) {
+        expiresOnFormatted = new Date(expiresOn).toLocaleDateString("en-GB", {year: '2-digit', month: '2-digit'})
+    }
     return (
         <Container className={container} onClick={onClick}>
             <img src={cardBase} alt="card" />
@@ -73,7 +78,7 @@ function Card({name, cardNumber, expiresOn, onClick}) {
             <Box className={chipStyle}><img style={{ maxWidth: '70px', maxHeight: '60px' }} src={chip} alt="chip" /></Box>
             <Box className={cardNumberContainer}>{Object.values(cardNumber)?.join?.(' ')}</Box>
             <Box className={nameContainer}>{name}</Box>
-            <Box className={expiresOnContainer}>{expiresOn && `${expiresOn.substring(0,2)} / ${expiresOn.substring(2,4)}`}</Box>
+            <Box className={expiresOnContainer}>{expiresOnFormatted && expiresOnFormatted}</Box>
         </Container>
     );
 }

@@ -4,12 +4,13 @@ import Card from '@components/Card';
 import { Container, makeStyles } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import {
+    CARD_NUMBER_LENGTH,
+    onlyDigitsRegex,
+    possibleCardNumberFirstDigits
+} from '@constants/cards';
+import useCardNumber from '@hooks/useCardNumber';
 
-
-const CARD_NUMBER_LENGTH = 16;
-
-let isnum = /^\d*$/
-const possibleStartingDigits = ['4', '5', '6'];
 
 const useStyles = makeStyles({
     container: {
@@ -21,9 +22,8 @@ const useStyles = makeStyles({
 function CardForm({ actionType, initialCardState }) {
     const { container } = useStyles();
     const [name, setName] = useState(initialCardState?.name);
-    const [cardNumber, setCardNumber] = useState(initialCardState?.cardNumber);
+    const [cardNumber, handleCardNumberChange, validCardNumber] = useCardNumber(initialCardState?.cardNumber);
     const [expiresOn, setExpiresOn] = useState(initialCardState?.expiresOn);
-    const [validExpDate, setValidExpDate] = useState(true);
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -33,7 +33,7 @@ function CardForm({ actionType, initialCardState }) {
     }
 
     const saveCard = () => {
-        if (!validExpDate || !name || Object.values(cardNumber).join().length < CARD_NUMBER_LENGTH) return;
+        if (!name || !validCardNumber) return;
         const newCard = {
             name,
             cardNumber,
@@ -46,33 +46,9 @@ function CardForm({ actionType, initialCardState }) {
         history.push('/cards');
     }
 
-    const handleExpiresOnChange = (event) => {
-        const month = event.target.value?.substring?.(0, 2);
-        const year = event.target.value?.substring?.(2, 4);
-        if (event.target.value.length > 4 || event.target.value?.[0] > 1 || (month > 12)) return;
-        const now = new Date();
-        const monthNow = now.getMonth() + 1;
-        const yearNow = now.getFullYear().toString().substring(2, 4);
-        if (event.target.value.length >= 4 && year < yearNow) {
-            setValidExpDate(false)
-        } else if (event.target.value.length >= 4 && parseInt(year) === parseInt(yearNow) && month < monthNow) {
-            setValidExpDate(false)
-        } else {
-            setValidExpDate(true)
-        }
-
-        setExpiresOn(event.target.value);
+    const handleExpiresOnChange = (date) => {
+        setExpiresOn(date);
     }
-
-    const handleCardNumberChange = (key) => (event) => {
-        if (!event.target.value.match(isnum) || event.target.value.length > 4) return
-        if (key === 'first' && !possibleStartingDigits.includes(event.target.value[0])) return
-        setCardNumber({
-            ...cardNumber,
-            [key]: event.target.value
-        })
-    }
-
 
     return (
         <>
@@ -90,7 +66,7 @@ function CardForm({ actionType, initialCardState }) {
                     handleNameChange={handleNameChange}
                     handleCardNumberChange={handleCardNumberChange}
                     handleExpiresOnChange={handleExpiresOnChange}
-                    validExpDate={validExpDate}
+                    validCardNumber={validCardNumber}
                 />
             </Container>
         </>
