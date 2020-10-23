@@ -21,11 +21,7 @@ function useCardNumber(initialState) {
     }
 
     useEffect(() => {
-        if(Object.values(cardNumber).join().length < CARD_NUMBER_LENGTH) {
-            setValid(false);
-        } else {
-            setValid(true);
-        }
+        setValid(Object.values(cardNumber).join().length >= CARD_NUMBER_LENGTH);
     }, [cardNumber]);
 
     return [cardNumber, handleCardNumberChange, valid];
