@@ -21,6 +21,7 @@ function cardsReducer(state = initialState, action) {
         case EDIT_CARD: {
             const { cards } = state;
             const { payload } = action;
+            if(!cards || !payload) return state;
             const index = cards?.findIndex?.(card => card.id === payload?.id)
             const newCards = [...cards]
             newCards.splice(index, 1, payload);
