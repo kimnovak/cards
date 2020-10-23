@@ -19,7 +19,14 @@ function cardsReducer(state = initialState, action) {
             }
         )
         case EDIT_CARD: {
-            return state
+            const { cards } = state;
+            const { payload } = action;
+            const index = cards?.findIndex?.(card => card.id === payload?.id)
+            const newCards = [...cards]
+            newCards.splice(index, 1, payload);
+            return {
+                cards: newCards
+            }
         }
         default: return state;
     }
