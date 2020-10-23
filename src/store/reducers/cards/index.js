@@ -1,4 +1,5 @@
 import { ADD_CARD, EDIT_CARD } from "@actionTypes/cards";
+import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
     cards: []
@@ -12,7 +13,7 @@ function cardsReducer(state = initialState, action) {
                     ...state.cards,
                     {
                         ...action.payload,
-                        id: state.cards.length
+                        id: uuidv4()
                     }
                 ]
             }

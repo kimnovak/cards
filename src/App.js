@@ -22,6 +22,7 @@ function App() {
         <Suspense fallback={<SuspenseFallback />}>
           <Layout>
             <Switch>
+              <Route exact path="/" component={Cards} />
               <Route exact path="/cards" component={Cards} />
               <Route exact path="/cards/add" component={AddCard} />
               <Route exact path="/cards/:id/edit" component={EditCard} />
