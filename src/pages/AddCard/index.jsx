@@ -5,7 +5,7 @@ import { Container, makeStyles } from '@material-ui/core';
 import Card from '@components/Card';
 import CardFormContainer from '@containers/CardForm';
 import CardForm from '@components/CardForm';
-import { ADD_CARD } from '@actionTypes/cards';
+import { ADD_CARD, EDIT_CARD } from '@actionTypes/cards';
 
 const useStyles = makeStyles({
     container: {
@@ -14,17 +14,19 @@ const useStyles = makeStyles({
     }
 })
 
+const initialCardNumberState = {
+    first: '',
+    second: '',
+    third: '',
+    fourth: ''
+}
 
-function AddCard() {
+
+function AddCard({card}) {
     const { container } = useStyles();
-    const [name, setName] = useState('');
-    const [cardNumber, setCardNumber] = useState({
-        first: '',
-        second: '',
-        third: '',
-        fourth: ''
-    });
-    const [expiresOn, setExpiresOn] = useState('');
+    const [name, setName] = useState(card?.name || '');
+    const [cardNumber, setCardNumber] = useState(card?.cardNumber || initialCardNumberState);
+    const [expiresOn, setExpiresOn] = useState(card?.expiresOn || '');
     const [validExpDate, setValidExpDate] = useState(true);
 
     const dispatch = useDispatch();
@@ -32,14 +34,14 @@ function AddCard() {
 
     const saveCard = () => {
         if (!validExpDate || !name || Object.values(cardNumber).join().length < 16) return;
-        const card = {
+        const newCard = {
             name,
             cardNumber,
             expiresOn
         }
         dispatch({
-            type: ADD_CARD,
-            payload: card
+            type: card ? EDIT_CARD : ADD_CARD,
+            payload: newCard
         })
         history.push('/cards');
     }
