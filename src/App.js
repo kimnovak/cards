@@ -1,9 +1,9 @@
 import React, { Suspense } from 'react';
+import DateFnsUtils from '@date-io/date-fns';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
 import Layout from '@components/Layout';
 import SuspenseFallback from '@components/SuspenseFallback';
 import ErrorBoundary from '@components/ErrorBoundary';
